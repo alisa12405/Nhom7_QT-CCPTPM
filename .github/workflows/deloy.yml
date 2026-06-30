@@ -63,10 +63,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Debug — Kiểm tra SSH key có hợp lệ không
+  run: |
+    echo "${{ secrets.SSH_PRIVATE_KEY }}" > /tmp/test_key
+    chmod 600 /tmp/test_key
+    ssh-keygen -l -f /tmp/test_key && echo "✅ Key hợp lệ" || echo "❌ Key lỗi định dạng"
+    head -1 /tmp/test_key
+    tail -1 /tmp/test_key
+    rm /tmp/test_key
+
       - name: Thiết lập SSH key
         run: |
-          install -m 600 -D /dev/null ~/.ssh/id_rsa_github
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa_github
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
       - name: Copy code lên server (rsync)
