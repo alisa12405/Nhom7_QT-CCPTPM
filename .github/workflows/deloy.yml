@@ -64,13 +64,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Debug — Kiểm tra SSH key có hợp lệ không
-  run: |
-    echo "${{ secrets.SSH_PRIVATE_KEY }}" > /tmp/test_key
-    chmod 600 /tmp/test_key
-    ssh-keygen -l -f /tmp/test_key && echo "✅ Key hợp lệ" || echo "❌ Key lỗi định dạng"
-    head -1 /tmp/test_key
-    tail -1 /tmp/test_key
-    rm /tmp/test_key
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > /tmp/test_key
+          chmod 600 /tmp/test_key
+          ssh-keygen -l -f /tmp/test_key && echo "✅ Key hợp lệ" || echo "❌ Key lỗi định dạng"
+          head -1 /tmp/test_key
+          tail -1 /tmp/test_key
+          rm /tmp/test_key
 
       - name: Thiết lập SSH key
         run: |
