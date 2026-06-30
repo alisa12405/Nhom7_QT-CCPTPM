@@ -1,9 +1,4 @@
 <?php
-// Bật hiển thị lỗi - XÓA sau khi test xong
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 // include header trước (header.php đã include config.php và khởi động session)
 require_once __DIR__ . '/../includes/header.php';
 require_once __DIR__ . '/../api/config/db.php';
