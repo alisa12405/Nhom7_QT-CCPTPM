@@ -1,0 +1,5 @@
+# .gitignore
+api/config/config.php
+docker-compose.yml
+.env
+db_init/*.sql
