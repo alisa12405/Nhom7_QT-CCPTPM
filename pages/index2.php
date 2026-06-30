@@ -45,6 +45,7 @@
 
     <p>
         Chào mừng bạn đến với website PHP.
+	Trang này du?c t?o ra d? debug l?i d?ng b? du?ng dâxn file
     </p>
 
     <p>
