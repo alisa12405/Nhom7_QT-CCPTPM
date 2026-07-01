@@ -35,7 +35,6 @@ jobs:
               echo "OK: $file"
             fi
           done < <(find . -name "*.php" -not -path "./.git/*" -print0)
-          
           if [ "$has_error" -eq 1 ]; then
             echo "Phát hiện file PHP lỗi cú pháp! Dừng workflow."
             exit 1
@@ -73,13 +72,10 @@ jobs:
           EOF
           chmod 600 ~/.ssh/config
 
-      - name: Thực thi lệnh Deploy qua SSH Action
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ssh.hmmh.click
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
+      - name: Deploy — Pull code và restart Docker
+        shell: bash
+        run: |
+          ssh -T ssh.hmmh.click << 'ENDSSH'
             cd ~/hotelbooking || exit 1
             echo "=== Đang kéo code mới từ GitHub ==="
             git pull origin main
@@ -88,7 +84,8 @@ jobs:
             docker compose down
             docker compose up -d --build
             
-            echo "=== Dọn dẹp Docker Images cũ (Dangling Images) ==="
+            echo "=== Dọn dẹp Docker Images cũ ==="
             docker image prune -f
             
             echo "Deploy hoàn tất thành công!"
+          ENDSSH
