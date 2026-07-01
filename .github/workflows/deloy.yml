@@ -35,7 +35,7 @@ jobs:
           done < <(find . -name "*.php" -not -path "./.git/*" -print0)
 
           if [ "$ERROR" -ne 0 ]; then
-            echo "Có file PHP lỗi cú pháp, nhưng workflow vẫn tiếp tục."
+            echo "Có file PHP lỗi cú pháp."
           else
             echo "Tất cả file PHP đều hợp lệ."
           fi
