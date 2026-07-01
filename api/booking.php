@@ -4,7 +4,7 @@
  */
 require_once __DIR__ . '/config/db.php';           // load BASE_URL + kết nối DB
 require_once __DIR__ . '/../includes/auth_check.php'; // requireLogin / requireAdmin / isAdmin
-
+// sua booking
 $action = $_GET['action'] ?? '';
 $db     = (new Database())->getConnection();
 
