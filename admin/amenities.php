@@ -3,6 +3,12 @@ session_start();
 require_once '../api/config/db.php'; 
 
 // 1. Kiểm tra quyền Admin
+// 1. Kiểm tra quyền Admin
+// 1. Kiểm tra quyền Admin
+// 1. Kiểm tra quyền Admin
+// 1. Kiểm tra quyền Admin
+// 1. Kiểm tra quyền Admin
+// 1. Kiểm tra quyền Admin
 if(!isset($_SESSION['user']) || $_SESSION['user']['role'] != 'admin') {
     header('Location: ../pages/login.php'); exit;
 }
