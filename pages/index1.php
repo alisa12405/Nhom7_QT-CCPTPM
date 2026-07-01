@@ -7,7 +7,7 @@ require_once __DIR__ . '/../api/config/db.php';
 <div class="hero-banner">
     <div class="container">
         <h1 class="display-4 fw-bold">Chào mừng đến <strong>LuxStay</strong></h1>
-        <p class="lead">Đặt phòng cao cấp với tiện ích 5 sao</p>
+        <p class="lead">Đặt phòng cao cấp với tiện ích 1.8 sao</p>
     </div>
 </div>
 
