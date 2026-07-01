@@ -4,3 +4,4 @@ Log phien thuc hanh so 3
 Log phien thuc hanh so 4
 Log phien thuc hanh so 5
 Log phien thuc hanh so 6
+Log phien thuc hanh so 7
