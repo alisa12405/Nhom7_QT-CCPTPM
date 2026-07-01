@@ -5,7 +5,7 @@
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 require_once dirname(__DIR__) . '/api/config/config.php';
-
+// toi la binh va toi sua header.php
 $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 $isAdmin     = isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin';
 $isLoggedIn  = isset($_SESSION['user']);
