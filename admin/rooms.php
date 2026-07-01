@@ -3,7 +3,7 @@
  * admin/rooms.php — Quản lý phòng
  */
 $pageTitle = 'Quản lý phòng — LuxStay Admin';
-
+//ndchjdbjcjbhdjbcbksjn slkvndsnvkjsdvoidsnvnsdvndskbjvkjdvsdjkvbksdjvbkjsbvkjskd
 require_once '../includes/auth_check.php';
 requireAdmin();
 
