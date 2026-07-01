@@ -60,22 +60,32 @@ jobs:
 
       - name: Cấu hình SSH Client và Cloudflare Access
         shell: bash
+        env:
+          CF_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
+          CF_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
+          SSH_USER: ${{ secrets.SSH_USER }}
         run: |
           mkdir -p ~/.ssh
+          
+          # ĐÚNG QUY TRÌNH: Phải ghi private key vào file để sử dụng kết nối
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          
+          # Viết file config (Tránh lỗi phân tách chuỗi bằng cách bọc biến rõ ràng)
           cat > ~/.ssh/config <<EOF
           Host ssh.hmmh.click
-              User ${{ secrets.SSH_USER }}
+              User $SSH_USER
               IdentityFile ~/.ssh/id_ed25519
               StrictHostKeyChecking no
               UserKnownHostsFile /dev/null
-              ProxyCommand cloudflared access ssh --hostname %h --id ${{ secrets.CF_ACCESS_CLIENT_ID }} --secret ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
+              ProxyCommand cloudflared access ssh --hostname %h --id "$CF_ID" --secret "$CF_SECRET"
           EOF
           chmod 600 ~/.ssh/config
 
       - name: Deploy — Pull code và restart Docker
         shell: bash
         run: |
-          ssh -T ssh.hmmh.click << 'ENDSSH'
+          ssh -i ~/.ssh/id_ed25519 -T ssh.hmmh.click << 'ENDSSH'
             cd ~/hotelbooking || exit 1
             echo "=== Đang kéo code mới từ GitHub ==="
             git pull origin main
