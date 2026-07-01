@@ -6,7 +6,7 @@ require_once '../includes/auth_check.php';
 $action = $_GET['action'] ?? '';
 $db_obj = new Database();
 $db     = $db_obj->getConnection();
-
+// sua user
 switch ($action) {
 
     // THÊM USER (admin)
