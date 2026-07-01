@@ -4,7 +4,7 @@
  * khi trang cần kiểm tra quyền truy cập.
  */
 if (session_status() === PHP_SESSION_NONE) session_start();
-
+// binh sưa auth_check
 // Cần BASE_URL để redirect đúng — load config nếu chưa có
 if (!defined('BASE_URL')) {
     require_once dirname(__DIR__) . '/api/config/config.php';
