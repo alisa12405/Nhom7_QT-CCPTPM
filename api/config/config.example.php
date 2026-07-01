@@ -5,3 +5,8 @@ define('DB_NAME', 'your_database');
 define('DB_USER', 'your_username');
 define('DB_PASS', 'Trunghieu66@');
 define('DB_CHARSET', 'utf8mb4');
+//hieu sua password database
+//hieu sua password database
+//hieu sua password database
+//hieu sua password database
+//hieu sua password database
