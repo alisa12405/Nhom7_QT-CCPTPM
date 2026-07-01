@@ -12,3 +12,4 @@ Minh luyen tap go lenh Git lan 1
 Log phien thuc hanh so 1
 Log phien thuc hanh so 2
 Log phien thuc hanh so 3
+Log phien thuc hanh so 4
