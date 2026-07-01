@@ -2,6 +2,12 @@
 /**
  * admin/room_types.php — Quản lý loại phòng
  */
+/**
+ * admin/room_types.php — Quản lý loại phòng
+ */
+/**
+ * admin/room_types.php — Quản lý loại phòng
+ */
 $pageTitle = 'Quản lý loại phòng — LuxStay Admin';
 
 require_once '../includes/auth_check.php';
