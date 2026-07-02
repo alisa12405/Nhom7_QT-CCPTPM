@@ -1,7 +1,11 @@
-<?php
+	<?php
 /**
  * pages/booking.php — Form đặt phòng
  */
+/**
+ * pages/booking.php — Form đặt phòng
+ */
+//Trunghieu
 $pageTitle = 'Đặt phòng — LuxStay';
 require_once '../includes/auth_check.php';
 requireLogin();                         // Chưa đăng nhập → về login
