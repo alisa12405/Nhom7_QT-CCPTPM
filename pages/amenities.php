@@ -3,7 +3,7 @@ require_once '../api/config/db.php';
 $page_title = 'Tiện ích LuxStay'; 
 include '../includes/header.php'; 
 ?>
-
+//06062005
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
