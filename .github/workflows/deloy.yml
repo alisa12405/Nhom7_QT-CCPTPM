@@ -22,25 +22,20 @@ jobs:
           extensions: pdo, pdo_mysql, mbstring
 
       - name: Kiểm tra cú pháp các file PHP
-        shell: bash
         run: |
-          has_error=0
-
+          ERROR=0
           while IFS= read -r -d '' file; do
-            output=$(php -l "$file" 2>&1)
-            status=$?
-
-            if [ "$status" -ne 0 ]; then
+            if ! php -l "$file" > /dev/null 2>&1; then
               echo "::warning file=$file::PHP syntax error"
-              echo "$output"
-              has_error=1
+              php -l "$file"
+              ERROR=1
             else
               echo "OK: $file"
             fi
           done < <(find . -name "*.php" -not -path "./.git/*" -print0)
 
-          if [ "$has_error" -eq 1 ]; then
-            echo "Có file PHP lỗi cú pháp, nhưng workflow vẫn tiếp tục."
+          if [ "$ERROR" -ne 0 ]; then
+            echo "Có file PHP lỗi cú pháp."
           else
             echo "Tất cả file PHP đều hợp lệ."
           fi
@@ -48,59 +43,19 @@ jobs:
           exit 0
 
   cd:
-    name: CD — Deploy qua Cloudflare Tunnel
+    name: CD — Build Docker image
     runs-on: ubuntu-latest
     needs: ci
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Cài cloudflared
-        shell: bash
-        run: |
-          curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb -o cloudflared.deb
-          sudo dpkg -i cloudflared.deb
+      - name: Kiểm tra Dockerfile tồn tại
+        run: test -f Dockerfile
 
-      - name: Cấu hình SSH key
-        shell: bash
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
+      - name: Build Docker image
+        run: docker build -t hotelbooking-ci:latest .
 
-      - name: Cấu hình known_hosts
-        shell: bash
-        run: |
-          touch ~/.ssh/known_hosts
-          chmod 644 ~/.ssh/known_hosts
-
-      - name: Cấu hình SSH qua Cloudflare Tunnel
-        shell: bash
-        run: |
-          cat > ~/.ssh/config <<EOF
-          Host ssh.hmmh.click
-            User ${{ secrets.SSH_USER }}
-            IdentityFile ~/.ssh/id_ed25519
-            StrictHostKeyChecking no
-            UserKnownHostsFile /dev/null
-            ProxyCommand cloudflared access ssh --hostname %h --id ${{ secrets.CF_ACCESS_CLIENT_ID }} --secret ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
-          EOF
-          chmod 600 ~/.ssh/config
-
-      - name: Kiểm tra kết nối SSH
-        shell: bash
-        run: |
-          ssh -T ssh.hmmh.click "echo SSH connected successfully"
-
-      - name: Deploy — Pull code và restart Docker
-        shell: bash
-        run: |
-          ssh -T ssh.hmmh.click << 'ENDSSH'
-            cd ~/hotelbooking
-            git pull origin main
-            docker compose down
-            docker compose up -d --build
-            echo "Deploy hoàn tất."
-          ENDSSH
+      - name: Kiểm tra image đã build
+        run: docker images | grep hotelbooking-ci
