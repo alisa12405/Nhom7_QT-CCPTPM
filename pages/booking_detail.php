@@ -1,7 +1,7 @@
 <?php
 require_once '../api/config/db.php';
 require_once '../includes/auth_check.php';
-
+// 1. SỬA LỖI SESSION: Truy cập vào mảng ['user']
 // 1. SỬA LỖI SESSION: Truy cập vào mảng ['user']
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
